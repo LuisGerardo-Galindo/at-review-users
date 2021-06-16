@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDTO getUser(String id) {
 		Optional<User> userSearch = userRepository.findById(id);
-		if (userSearch.isEmpty()) {
+		if (!userSearch.isPresent()) {
 			throw new UserNotFoundException(NOT_FOUND_RESOURCE + id);
 		}
 		return orikaMapperFacade.map(userSearch.get(), UserDTO.class);
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUser(String id) {
 		Optional<User> userSearch = userRepository.findById(id);
-		if (userSearch.isEmpty()) {
+		if (!userSearch.isPresent()) {
 			throw new UserNotFoundException(NOT_FOUND_RESOURCE + id);
 		}
 		userRepository.deleteById(id);
